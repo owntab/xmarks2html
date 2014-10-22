@@ -7,10 +7,10 @@ import unittest
 
 class TreeNode(object):
     def __init__(self):
-        self.Childs = []
+        self.Children = []
 
     def Add(self, node):
-        self.Childs.append(node)
+        self.Children.append(node)
 
 
 class BookTree(object):
@@ -22,7 +22,7 @@ class BookTree(object):
                 return testNode
 
         for testNode in listOfNodes:
-            result = self._GetNode(nodeId, testNode.Childs)
+            result = self._GetNode(nodeId, testNode.Children)
             if result:
                 return result
         return None
