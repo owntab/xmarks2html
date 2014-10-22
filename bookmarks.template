@@ -1,0 +1,19 @@
+<!doctype html>
+<title>Xurxo's Boomarks</title>
+ <meta charset="utf-8">
+<h1>A collection of useful (or not) bookmarks</h1>
+<ul>
+{%- for item in tree.Root.Children recursive %}
+
+    {%- if item.Children or item.Data.Url -%}
+        <li>
+        {%- if item.Data.Url -%}<a href='{{ item.Data.Url }}'>{%- endif %}
+            {{ item.Data.Name }}
+        {%- if item.Data.Url -%}</a>{%- endif %}
+
+
+            <ul>{{ loop(item.Children) }}</ul>
+         </li>
+    {%- endif %}
+{%- endfor %}
+</ul>
