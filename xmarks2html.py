@@ -42,7 +42,7 @@ class BookTree(object):
 
 
 def main():
-    with open('bookmarks.txt') as bookmarksFile:
+    with open('bookmarks.json') as bookmarksFile:
         data = json.load(bookmarksFile)
 
     book_tree = BookTree()
