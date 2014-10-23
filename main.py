@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 import json
+import string
 import sys
 from xmarks2html import BookTree
 from jinja2 import Environment, PackageLoader
@@ -21,7 +22,9 @@ def GetData(args):
         data.Url=''
 
     data.Name = args.get('name', data.Url)
-
+    data.Name = string.strip(data.Name , string.whitespace)
+    if not data.Name:
+        data.Name = data.Url
     return data
 
 
