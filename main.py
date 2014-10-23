@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 import json
+import sys
 from xmarks2html import BookTree
 from jinja2 import Environment, PackageLoader
 
@@ -25,7 +26,13 @@ def GetData(args):
 
 
 def main():
-    with codecs.open('bookmarks.json', encoding='utf-8') as bookmarksFile:
+    if len(sys.argv)!=2:
+        print 'Usage: python main.py path_to_xmarks_json_file'
+        return
+
+    json_file = sys.argv[1]
+
+    with codecs.open(json_file, encoding='utf-8') as bookmarksFile:
         data = json.load(bookmarksFile)
 
     book_tree = BookTree()
