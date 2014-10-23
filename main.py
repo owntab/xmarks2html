@@ -25,6 +25,27 @@ def GetData(args):
     return data
 
 
+def ReadJsonFile(json_file):
+    with codecs.open(json_file, encoding='utf-8') as bookmarksFile:
+        data = json.load(bookmarksFile)
+    return data
+
+
+def CreateBookmarksTree(data):
+    book_tree = BookTree()
+    for command in data['commands']:
+        if command['action'] == 'insert':
+            args = command['args']
+            book_tree.Add(command['nid'], args['pnid'], GetData(args))
+    return book_tree
+
+
+def OutputHtml(book_tree):
+    env = Environment(loader=PackageLoader('xmarks2html', ''))
+    template = env.get_template('bookmarks.template')
+    print template.render(tree=book_tree).encode('utf-8')
+
+
 def main():
     if len(sys.argv)!=2:
         print 'Usage: python main.py path_to_xmarks_json_file'
@@ -32,18 +53,11 @@ def main():
 
     json_file = sys.argv[1]
 
-    with codecs.open(json_file, encoding='utf-8') as bookmarksFile:
-        data = json.load(bookmarksFile)
+    data = ReadJsonFile(json_file)
 
-    book_tree = BookTree()
-    for command in data['commands']:
-        if command['action'] == 'insert':
-            args = command['args']
-            book_tree.Add(command['nid'], args['pnid'], GetData(args))
+    book_tree = CreateBookmarksTree(data)
 
-    env = Environment(loader=PackageLoader('xmarks2html', ''))
-    template = env.get_template('bookmarks.template')
-    print template.render(tree=book_tree ).encode('utf-8')
+    OutputHtml(book_tree)
 
 
 if __name__ == "__main__":
