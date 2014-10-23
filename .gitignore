@@ -55,4 +55,5 @@ target/
 
 # personal stuff
 .idea
-poche.sqlite
+bookmarks.json
+index.html
