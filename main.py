@@ -34,9 +34,14 @@ def ReadJsonFile(json_file):
 def CreateBookmarksTree(data):
     book_tree = BookTree()
     for command in data['commands']:
+
         if command['action'] == 'insert':
             args = command['args']
-            book_tree.Add(command['nid'], args['pnid'], GetData(args))
+            Data = GetData(args)
+            if Data.Type != 'bookmark' and Data.Type != 'folder':
+                continue
+
+            book_tree.Add(command['nid'], args['pnid'], Data)
     return book_tree
 
 
